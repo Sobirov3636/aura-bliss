@@ -15,16 +15,6 @@ adminController.goHome = (req: Request, res: Response) => {
   }
 };
 
-adminController.getLogin = (req: Request, res: Response) => {
-  try {
-    console.log("getLogin");
-
-    res.send("Login Page");
-  } catch (err) {
-    console.log("Error, getLogin", err);
-  }
-};
-
 adminController.getSignup = (req: Request, res: Response) => {
   try {
     console.log("getSignup");
@@ -35,17 +25,13 @@ adminController.getSignup = (req: Request, res: Response) => {
   }
 };
 
-adminController.processLogin = async (req: Request, res: Response) => {
+adminController.getLogin = (req: Request, res: Response) => {
   try {
-    console.log("processLogin");
-    const input: LoginInput = req.body;
+    console.log("getLogin");
 
-    const memberService = new MemberService();
-    const result = await memberService.processLogin(input);
-    res.send(result);
+    res.send("Login Page");
   } catch (err) {
-    console.log("Error, processLogin", err);
-    res.send(err);
+    console.log("Error, getLogin", err);
   }
 };
 
@@ -61,6 +47,20 @@ adminController.processSignup = async (req: Request, res: Response) => {
     res.send(result);
   } catch (err) {
     console.log("Error, processSignup", err);
+    res.send(err);
+  }
+};
+
+adminController.processLogin = async (req: Request, res: Response) => {
+  try {
+    console.log("processLogin");
+    const input: LoginInput = req.body;
+
+    const memberService = new MemberService();
+    const result = await memberService.processLogin(input);
+    res.send(result);
+  } catch (err) {
+    console.log("Error, processLogin", err);
     res.send(err);
   }
 };
