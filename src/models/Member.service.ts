@@ -17,9 +17,9 @@ class MemberService {
     input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
 
     try {
-      const result = await this.memberModel.create(input);
+      const result: any = await this.memberModel.create(input);
       result.memberPassword = "";
-      return result.toJSON() as Member;
+      return result.toJSON();
     } catch (error) {
       throw new Errors(HttpCode.BAD_REQUEST, Message.USED_NICK_PHONE);
     }
@@ -36,9 +36,8 @@ class MemberService {
 
     if (!isMatch) throw new Errors(HttpCode.UNAUTHORIZED, Message.WRONG_PASSWORD);
 
-    const result = await this.memberModel.findById(member._id).exec();
-    if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NOT_DATA_FOUND);
-    return result.toObject() as Member;
+    const result: any = await this.memberModel.findById(member._id).lean().exec();
+    return result;
   }
 
   /* BSSR */
@@ -50,9 +49,9 @@ class MemberService {
     input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
 
     try {
-      const result = await this.memberModel.create(input);
+      const result: any = await this.memberModel.create(input);
       result.memberPassword = "";
-      return result.toObject();
+      return result;
     } catch (error) {
       throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
     }
@@ -67,9 +66,9 @@ class MemberService {
     const isMatch = await bcrypt.compare(input.memberPassword, member.memberPassword);
 
     if (!isMatch) throw new Errors(HttpCode.UNAUTHORIZED, Message.WRONG_PASSWORD);
-    const result = await this.memberModel.findById(member._id).exec();
-    if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NOT_DATA_FOUND);
-    return result.toObject() as Member;
+    const result: any = await this.memberModel.findById(member._id).lean().exec();
+
+    return result;
   }
 }
 
