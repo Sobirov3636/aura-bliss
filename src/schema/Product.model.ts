@@ -22,6 +22,7 @@ const productSchema = new Schema(
     productTargetUser: {
       type: String,
       enum: ProductTargetUser,
+      required: true,
     },
 
     productPrice: {
@@ -35,8 +36,9 @@ const productSchema = new Schema(
     },
 
     productVolume: {
-      type: String,
+      type: Number,
       enum: ProductVolume,
+      required: true,
     },
 
     productDesc: {

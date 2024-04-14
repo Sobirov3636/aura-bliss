@@ -22,6 +22,7 @@ export enum ProductCategory {
   BODY_CARE = "BODY_CARE",
   HAIR_CARE = "HAIR_CARE",
   MAKE_UP = "MAKE_UP",
+  PARFUME = "PARFUME",
   OTHER = "OTHER",
 }
 export enum ProductTargetUser {
