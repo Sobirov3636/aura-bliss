@@ -1,5 +1,6 @@
 export enum ProductVolume {
   FIFTY = 50,
+  SEVENTY = 70,
   HUNDRED = 100,
   ONE_HUNDRED_FIFTY = 150,
   TWO_HUNDRED = 200,
