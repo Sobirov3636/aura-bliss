@@ -7,6 +7,7 @@ import Errors, { HttpCode, Message } from "../libs/Errors";
 
 // Admin BSSR
 const adminController: T = {};
+const memberService = new MemberService();
 adminController.goHome = (req: Request, res: Response) => {
   try {
     console.log("goHome");
@@ -49,7 +50,6 @@ adminController.processSignup = async (req: AdminRequest, res: Response) => {
     newMember.memberImage = file?.path.replace(/\\/g, "/");
     newMember.memberType = MemberType.ADMIN;
 
-    const memberService = new MemberService();
     const result = await memberService.processSignup(newMember);
     req.session.member = result;
     req.session.save(function () {
@@ -68,7 +68,6 @@ adminController.processLogin = async (req: AdminRequest, res: Response) => {
     console.log("processLogin");
     const input: LoginInput = req.body;
 
-    const memberService = new MemberService();
     const result = await memberService.processLogin(input);
     req.session.member = result;
     req.session.save(function () {
@@ -91,6 +90,19 @@ adminController.logout = async (req: AdminRequest, res: Response) => {
   } catch (err) {
     console.log("Error, logout", err);
     res.redirect("/admin");
+  }
+};
+
+adminController.getUsers = async (req: Request, res: Response) => {
+  try {
+    console.log("getUsers");
+    const result = await memberService.getUsers();
+    console.log("users:", result);
+
+    res.render("users", { users: result });
+  } catch (err) {
+    console.log("Error, getUsers", err);
+    res.redirect("/admin/login");
   }
 };
 

@@ -23,6 +23,8 @@ routerAdmin.post(
   productController.createNewProduct
 );
 routerAdmin.post("/product/:id", adminController.verifyAdmin, productController.updateChosenProduct);
+
 /** User */
+routerAdmin.get("/user/all", adminController.verifyAdmin, adminController.getUsers);
 
 export default routerAdmin;
