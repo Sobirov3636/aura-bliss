@@ -1,5 +1,77 @@
 <%- include('includes/header') %>
+
+<link rel="stylesheet" type="text/css" href="/css/signup.css" />
+
 <body>
-  <div>Signup Page</div>
+  <div class="signup-container">
+    <form onsubmit="return validateSignupForm()" action="/admin/signup" method="POST" enctype="multipart/form-data">
+      <div class="signup-frame" style="width: 650px">
+        <div class="signup-top">
+          <span>Signup</span>
+          <div>Go back <a href="/admin" style="color: #6440fb">Home</a></div>
+          <p>
+            Already signed up?
+            <a href="/admin/login" style="color: #6440fb">Login</a>
+          </p>
+        </div>
+
+        <div class="sign-input-frame" style="justify-content: space-between">
+          <div class="sign-up-frame">
+            <label>Username *</label>
+            <input type="text" name="username" class="username" placeholder="Username" value="" />
+          </div>
+          <div class="sign-up-frame">
+            <label>Email *</label>
+            <input type="email" name="email" class="email" placeholder="Email" value="" />
+          </div>
+        </div>
+        <div class="sign-input-frame" style="justify-content: space-between">
+          <div class="sign-up-frame">
+            <label>Password *</label>
+            <input type="password" name="password" class="password" placeholder="Password" value="" />
+          </div>
+          <div class="sign-up-frame">
+            <label>Confirm Password *</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              class="confirm-password"
+              placeholder="Confirm Password"
+              value=""
+            />
+          </div>
+        </div>
+
+        <div class="signup-input-frame">
+          <div class="media-frame">
+            <img class="upload-img-frame" src="/img/cosmeticAdmin.jpeg" />
+            <div class="upload-container">
+              <span class="media-text">Profile Picture</span>
+              <div class="file-box bs3-primary preview-image" style="margin-top: 25px; display: flex">
+                <input class="upload-name" value="Choose image" disabled="disabled" />
+                <label for="input-file" class="file-input-label">Upload Image</label>
+                <input
+                  type="file"
+                  id="input-file"
+                  class="upload-hidden form-control-file profile-image"
+                  name="profileImage"
+                />
+              </div>
+              <p class="thumbnail-desc">
+                Please upload a profile picture.<br />
+                Supported formats: .jpg, .jpeg, or .png.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <input name="accountType" value="CUSTOMER" hidden />
+
+        <button class="signup-btn btn" name="signup" type="submit">Signup</button>
+      </div>
+    </form>
+  </div>
+  <script type="text/javascript" src="/js/signup.js"></script>
 </body>
+
 <%- include('includes/footer') %>

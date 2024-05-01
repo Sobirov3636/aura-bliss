@@ -1,9 +1,180 @@
 <%- include('includes/header') %>
+
+<link rel="stylesheet" type="text/css" href="/css/products.css" />
+
 <body>
-  <div>Products Page</div>
-  <div><%=member.memberNick%></div>
-  <% products.map((value, key) => {%>
-  <p><%= value.productName %> - <%= value.productVolume %></p>
-  <% }) %>
+  <div class="products-container">
+    <div class="navigation-menu">
+      <ul class="nav justify-content-center">
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link active" href="/admin/">Home</a>
+        </li>
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link" href="/admin/product/all">Products</a>
+        </li>
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link" href="/admin/user/all">Users</a>
+        </li>
+        <li class="nav-item" style="cursor: pointer" onclick="return confirm('Do you want to logout?')">
+          <a class="nav-link" href="/admin/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="cosmetic-menu-frame">
+      <div class="board">
+        <div class="cosmetic-table">
+          <span class="new-cosmetic-txt" style="margin-bottom: 30px"> PRODUCTS MENU </span>
+          <table class="table table-bordered table-hover">
+            <thead class="table-success">
+              <tr class="table-success" >
+                <th scope="col">T/r</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Category</th>
+                <th scope="col">Product Target</th>
+                <th scope="col">Product Volume</th>
+                <th scope="col">Product Price</th>
+                <th scope="col">Product Left Count</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <!--  LOOP PRODUCTS: START  -->
+            <% products.map((value, key) => {%>
+            <tbody class="table-secondary">
+              <td><%= key + 1%></td>
+              <td ><%= value.productName%></td>
+              <td><%= value.productCategory%></td>
+              <td><%= value.productTargetUser%></td>
+              <td><%= value.productVolume%> ml</td>
+              <td><%= value.productPrice%> $</td>
+              <td><%= value.productLeftCount%></td>
+              <td>
+                <select class="spec-select new-product-status" id="<%= value._id %>">
+                  <option value="PAUSE" <%= value.productStatus === "PAUSE" ? "selected" : '' %> >PAUSE</option>
+                  <option value="PROCESS"<%= value.productStatus === "PROCESS" ? "selected" : '' %>>PROCESS</option>
+                  <option value="DELETE"<%= value.productStatus === "DELETE" ? "selected" : '' %>>DELETE</option>
+                </select>
+              </td>
+            </tbody>
+            <%})%>
+
+            <!--  LOOP PRODUCTS: END  -->
+          </table>
+          <div class="long-input" style="align-items: flex-end; margin-bottom: 25px">
+            <button class="btn btn-primary" id="process-btn">New Product</button>
+          </div>
+        </div>
+        <form onsubmit="return validateForm()" action="/admin/product/create" method="POST" class="cosmetic-container" enctype="multipart/form-data">
+          <div class="long-input" style="display: flex; align-items: center">
+            <span class="new-cosmetic-txt">NEW PRODUCT DETAIL</span>
+          </div>
+          <div class="half-input-frame">
+            <div class="half-input">
+              <label>Product Name</label>
+              <input type="text" placeholder="Name" name="productName" class="product-name" />
+            </div>
+            <div class="half-input">
+              <label>Target User</label>
+              <select class="product-target-user" name="productTargetUser">
+                <option value="MENU" >Men</option>
+                <option value="WOMEN"selected>Women</option>
+                <option value="UNISEX">Unisex</option>
+              </select>
+            </div>
+            
+          </div>
+          <div class="half-input-frame">
+            <div class="half-input">
+              <label>Product Price</label>
+              <input type="number" placeholder="Price" name="productPrice" class="product-price" />
+            </div>
+            <div class="half-input">
+              <label>Product Left Counts</label>
+              <input type="number" placeholder="Counts" name="productLeftCount" class="product-left-count" />
+            </div>
+          </div>
+          <div class="half-input-frame">
+            <div class="half-input">
+              <label>Product Category</label>
+              <select class="product-category" name="productCategory">
+                <option value="SKINCARE" selected>Skin Care</option>
+                <option value="BODYCARE">Body Care</option>
+                <option value="HAIRCARE">Hair Care</option>
+                <option value="MAKEUP">Make Up</option>
+                <option value="PARFUME">Parfume</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <!-- <div class="half-input" id="product-collection">
+              <label>Product Volume</label>
+              <select class="product-size" name="productSize">
+                <option value="SMALL">Small</option>
+                <option value="NORMAL" selected>Normal</option>
+                <option value="LARGE">Large</option>
+                <option value="SET">Set</option>
+              </select>
+            </div> -->
+
+            <div class="half-input" id="product-volume">
+              <label>Product Volume</label>
+              <select class="product-volume" name="productVolume">
+                <option value="50">50 ml</option>
+                <option value="70" selected>70 ml</option>
+                <option value="100">100 ml</option>
+                <option value="150">150 ml</option>
+                <option value="200">200 ml</option>
+                <option value="250">250 ml</option>
+                <option value="300">300 ml</option>
+                <option value="350">350 ml</option>
+                <option value="400">400 ml</option>
+                <option value="450">450 ml</option>
+                <option value="500">500 ml</option>
+              </select>
+            </div>
+          </div>
+          <div class="long-input">
+            <label>Product Description</label>
+            <textarea name="productDesc" class="product-desc"></textarea>
+          </div>
+
+          <div class="img-frame">
+            <label>Product Images</label>
+            <div class="media-frame">
+              <div class="upload-img-box">
+                <img src="/img/uploadImage.png" class="1" id="image-section-1" />
+                <input type="file" id="file" name="productImages" class="image-one" required  onchange="previewFileHandler(this, 1)"/>
+              </div>
+              <div class="upload-img-box">
+                <img src="/img/uploadImage.png" class="2" id="image-section-2" />
+                <input type="file" id="file" name="productImages" class="image-two" onchange="previewFileHandler(this, 2)" />
+              </div>
+              <div class="upload-img-box">
+                <img src="/img/uploadImage.png" class="3" id="image-section-3" />
+                <input type="file" id="file" name="productImages" class="image-three" onchange="previewFileHandler(this, 3)" />
+              </div>
+              <div class="upload-img-box">
+                <img src="/img/uploadImage.png" class="4" id="image-section-4" />
+                <input type="file" id="file" name="productImages" class="image-four" onchange="previewFileHandler(this, 4)" />
+              </div>
+              <div class="upload-img-box">
+                <img src="/img/uploadImage.png" class="5" id="image-section-5" />
+                <input type="file" id="file" name="productImages" class="image-five" onchange="previewFileHandler(this, 5)" />
+              </div>
+              <input name="restaurantIid" class="restaurant-id" hidden />
+            </div>
+          </div>
+
+          <div class="operation-buttons">
+            <button class="btn btn-danger" id="cancel-btn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="create-btn">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="/js/products.js"></script>
 </body>
+
 <%- include('includes/footer') %>

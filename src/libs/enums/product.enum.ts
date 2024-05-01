@@ -19,10 +19,10 @@ export enum ProductStatus {
 }
 
 export enum ProductCategory {
-  SKIN_CARE = "SKIN_CARE",
-  BODY_CARE = "BODY_CARE",
-  HAIR_CARE = "HAIR_CARE",
-  MAKE_UP = "MAKE_UP",
+  SKINCARE = "SKIN CARE",
+  BODYCARE = "BODY CARE",
+  HAIRCARE = "HAIR CARE",
+  MAKEUP = "MAKE UP",
   PARFUME = "PARFUME",
   OTHER = "OTHER",
 }

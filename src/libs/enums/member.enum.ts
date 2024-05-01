@@ -3,6 +3,11 @@ export enum MemberType {
   ADMIN = "ADMIN",
 }
 
+export enum MemberGender {
+  MEN = "Men",
+  WOMEN = "Women",
+}
+
 export enum MemberStatus {
   ACTIVE = "ACTIVE",
   BLOCK = "BLOCK",
