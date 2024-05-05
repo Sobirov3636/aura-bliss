@@ -24,10 +24,17 @@ $(function () {
 
 function validateSignupForm() {
   const memberNick = $(".member-nick").val(),
+    memberGender = $(".member-gender").val(),
     memberPhone = $(".member-phone").val(),
     memberPassword = $(".member-password").val(),
     confirmPassword = $(".confirm-password").val();
-  if (memberNick === "" || memberPhone === "" || memberPassword === "" || confirmPassword === "") {
+  if (
+    memberNick === "" ||
+    memberGender === "" ||
+    memberPhone === "" ||
+    memberPassword === "" ||
+    confirmPassword === ""
+  ) {
     alert("Please insert all required inputs");
     return false;
   }
@@ -40,7 +47,7 @@ function validateSignupForm() {
   const memberImage = $(".member-image").get(0).files[0] ? $(".member-image").get(0).files[0].name : null;
 
   if (!memberImage) {
-    alert("Please insert restaurant image");
+    alert("Please insert profile image");
     return false;
   }
 }

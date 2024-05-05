@@ -4,8 +4,8 @@ export enum MemberType {
 }
 
 export enum MemberGender {
-  MEN = "Men",
-  WOMEN = "Women",
+  MEN = "MEN",
+  WOMEN = "WOMEN",
 }
 
 export enum MemberStatus {

@@ -57,7 +57,6 @@ adminController.processSignup = async (req: AdminRequest, res: Response) => {
     });
   } catch (err) {
     console.log("Error, processSignup", err);
-    res.send(err);
     const message = err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
     res.send(`<script>alert("${message}"); window.location.replace('/admin/signup')</script>`);
   }
@@ -75,7 +74,6 @@ adminController.processLogin = async (req: AdminRequest, res: Response) => {
     });
   } catch (err) {
     console.log("Error, processLogin", err);
-    res.send(err);
     const message = err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
     res.send(`<script>alert("${message}"); window.location.replace('/admin/signup')</script>`);
   }
