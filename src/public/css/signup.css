@@ -15,7 +15,6 @@
 
 .signup-container a {
   text-decoration: none;
-  color: black;
 }
 
 .signup-container .signup-frame {
@@ -198,10 +197,18 @@
 .signup-btn {
   font-family: "Courier";
   margin-top: 5px;
-  background: #425be9;
+  background: #7681bf;
   color: #ffffff;
   border: 1px solid #dddddd;
-  border-radius: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease 0s;
+}
+.signup-btn:hover,
+.signup-btn:focus {
+  font-weight: 600;
+  letter-spacing: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
 }
 .signup-bottom {
   font-family: "Courier";

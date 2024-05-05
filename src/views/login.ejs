@@ -1,38 +1,38 @@
 <%- include('includes/header') %>
 
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  integrity="sha512-iIvqHpEXKx6wjKVF1N2Ikzc4tRp+Q81vCW74Ft10l5STyOiYNs6qlTfA6B+gUZikVkbfoifPc5s5gmxRfJaCrg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
 <link rel="stylesheet" type="text/css" href="/css/login.css" />
 
 <body>
-  <form class="login-container" action="/admin/login" METHOD="POST">
-    <div class="login-frame">
-      <div class="login-top">
-        <span>Enter</span>
-        <div>Go back <a href="/admin" style="color: #6440fb">Home</a></div>
+  <div class="form-container">
+    <h3 class="title">Login</h3>
+    <form action="/admin/login" METHOD="POST" class="form-horizontal">
+      <div class="form-icon">
+        <img src="/img/userIcon.png" alt="" />
+      </div>
+      <div class="form-group">
+        <span class="input-icon"><img src="/img/user.svg" alt="" /></span>
+        <input type="text" name="memberNick" class="form-control" placeholder="Username" value="" required />
+      </div>
+      <div class="form-group">
+        <span class="input-icon"><img src="/img/lock.svg" alt="" /></span>
+        <input type="password" name="memberPassword" class="form-control" placeholder="Password" value="" required />
+      </div>
+      <button class="btn signin" name="login" type="submit">Login</button>
+      <div class="signup-bottom">
         <p>
           Not registered yet?
-          <a href="/admin/signup" style="color: #6440fb">Signup</a>
+          <a href="/admin/signup" style="color: #6440fb; text-decoration: none">Signup</a>
         </p>
       </div>
-      <div class="login-input-frame">
-        <div class="login-input-container">
-          <label>Username *</label>
-          <input type="text" name="memberNick" class="member-nick" placeholder="Username" value="" required />
-        </div>
-        <div class="login-input-container">
-          <label>Password *</label>
-          <input
-            type="password"
-            name="memberPassword"
-            class="member-password"
-            placeholder="Password"
-            value=""
-            required
-          />
-        </div>
-      </div>
-      <button class="login-btn btn" name="login" type="submit">Login</button>
-    </div>
-  </form>
+    </form>
+  </div>
 </body>
 
 <%- include('includes/footer') %>
