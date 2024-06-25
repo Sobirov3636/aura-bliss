@@ -1,5 +1,11 @@
 import mongoose, { Schema } from "mongoose";
-import { ProductCategory, ProductStatus, ProductTargetUser, ProductVolume } from "../libs/enums/product.enum";
+import {
+  ProductBrand,
+  ProductCategory,
+  ProductStatus,
+  ProductTargetUser,
+  ProductVolume,
+} from "../libs/enums/product.enum";
 
 const productSchema = new Schema(
   {
@@ -22,6 +28,11 @@ const productSchema = new Schema(
     productTargetUser: {
       type: String,
       enum: ProductTargetUser,
+      required: true,
+    },
+    productBrand: {
+      type: String,
+      enum: ProductBrand,
       required: true,
     },
 

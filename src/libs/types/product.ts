@@ -1,6 +1,5 @@
 import { ObjectId } from "mongoose";
-import { ProductCategory, ProductStatus, ProductTargetUser } from "../enums/product.enum";
-// import { ProductCategory, ProductSize, ProductStatus } from "../enums/ product.enum";
+import { ProductBrand, ProductCategory, ProductStatus, ProductTargetUser } from "../enums/product.enum";
 
 export interface Product {
   _id: ObjectId;
@@ -16,10 +15,21 @@ export interface Product {
   productViews: number;
 }
 
+export interface ProductInquery {
+  order: string;
+  page: number;
+  limit: number;
+  productCategory?: ProductCategory;
+  productBrand?: ProductBrand;
+  productTargetUser?: ProductTargetUser;
+  search?: string;
+}
+
 export interface ProductInput {
   productStatus?: ProductStatus;
   productCategory: ProductCategory;
   productTargetUser: ProductTargetUser;
+  productBrand: ProductBrand;
   productName: string;
   productPrice: number;
   productLeftCount: number;
@@ -33,6 +43,7 @@ export interface ProductUpdateInput {
   _id: ObjectId;
   productStatus?: ProductStatus;
   productCategory?: ProductCategory;
+  productTargetUser?: ProductTargetUser;
   productName?: string;
   productPrice?: number;
   productLeftCount?: number;

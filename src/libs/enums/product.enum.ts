@@ -31,3 +31,14 @@ export enum ProductTargetUser {
   WOMEN = "WOMEN",
   UNISEX = "UNISEX",
 }
+
+export enum ProductBrand {
+  DRJART = "DR. JART+",
+  ILLIYOON = "ILLIYOON",
+  BELIF = "BELIF",
+  JIGOTT = "JIGOTT",
+  FARMSTAY = "FARMSTAY",
+  EKEL = "EKEL",
+  ANJO = "ANJO",
+  OTHER = "OTHER",
+}

@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import memberController from "./controllers/member.controller";
 import makeUploader from "./libs/utils/uploader";
+import productController from "./controllers/product.controller";
 
 /** Member **/
 router.post("/member/login", memberController.login);
@@ -16,6 +17,7 @@ router.post(
 );
 
 /** Product **/
+router.get("/product/all", productController.getProducts);
 
 /** Order **/
 
