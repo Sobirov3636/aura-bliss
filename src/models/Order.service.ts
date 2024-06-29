@@ -1,11 +1,12 @@
 import OrderItemModel from "../schema/OrderItem.model";
 import OrderModel from "../schema/Order.model";
 import { Member } from "../libs/types/member";
-import { Order, OrderItemInput } from "../libs/types/order";
+import { Order, OrderInquery, OrderItemInput } from "../libs/types/order";
 import { shapeIntoMongooseObjectId } from "../libs/config";
 import Errors, { Message } from "../libs/Errors";
 import { HttpCode } from "../libs/Errors";
 import { ObjectId } from "mongoose";
+import { T } from "../libs/types/common";
 
 class OrderService {
   private readonly orderModel;
@@ -48,6 +49,38 @@ class OrderService {
 
     const orderItemsState = await Promise.all(pomisedList);
     console.log("orderItemsState:", orderItemsState);
+  }
+
+  public async getMyOrders(member: Member, inquery: OrderInquery): Promise<Order[]> {
+    const memberId = shapeIntoMongooseObjectId(member._id);
+    const matches: T = { memberId: memberId, orderStatus: inquery.orderStatus };
+
+    const result = await this.orderModel.aggregate([
+      { $match: matches },
+      { $sort: { updatedAt: -1 } },
+      { $skip: (inquery.page - 1) * inquery.limit },
+      { $limit: inquery.limit },
+      {
+        $lookup: {
+          from: "orderItems",
+          localField: "_id",
+          foreignField: "orderId",
+          as: "orderItems",
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "orderItems.productId",
+          foreignField: "_id",
+          as: "productData",
+        },
+      },
+    ]);
+
+    if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NOT_DATA_FOUND);
+
+    return result;
   }
 }
 
