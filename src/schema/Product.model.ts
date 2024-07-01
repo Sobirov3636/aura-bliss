@@ -33,7 +33,7 @@ const productSchema = new Schema(
     productBrand: {
       type: String,
       enum: ProductBrand,
-      required: true,
+      // required: true,
     },
 
     productPrice: {

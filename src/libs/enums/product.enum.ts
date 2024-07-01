@@ -19,11 +19,11 @@ export enum ProductStatus {
 }
 
 export enum ProductCategory {
-  SKINCARE = "SKIN CARE",
-  BODYCARE = "BODY CARE",
-  HAIRCARE = "HAIR CARE",
-  MAKEUP = "MAKE UP",
-  PARFUME = "PARFUME",
+  SKINCARE = "SKINCARE",
+  BODYCARE = "BODYCARE",
+  HAIRCARE = "HAIRCARE",
+  MAKEUP = "MAKEUP",
+  PERFUME = "PERFUME",
   OTHER = "OTHER",
 }
 export enum ProductTargetUser {
@@ -33,7 +33,6 @@ export enum ProductTargetUser {
 }
 
 export enum ProductBrand {
-  DRJART = "DR. JART+",
   ILLIYOON = "ILLIYOON",
   BELIF = "BELIF",
   JIGOTT = "JIGOTT",
