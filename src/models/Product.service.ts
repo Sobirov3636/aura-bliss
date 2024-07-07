@@ -11,14 +11,19 @@ import { ObjectId } from "mongoose";
 import ViewService from "./View.service";
 import { ViewInput } from "../libs/types/view";
 import { ViewGroup } from "../libs/enums/view.enum";
+import { LikeGroup } from "../libs/enums/like.enum";
+import LikeService from "./Like.service";
+import { LikeInput } from "../libs/types/like";
 
 class ProductService {
   private readonly productModel;
   public viewService;
+  public likeService;
 
   constructor() {
     this.productModel = ProductModel;
     this.viewService = new ViewService();
+    this.likeService = new LikeService();
   }
 
   /* SPA */
@@ -55,8 +60,8 @@ class ProductService {
   }
 
   public async getProduct(memberId: ObjectId | null, id: string): Promise<Product> {
-    const proudctId = shapeIntoMongooseObjectId(id);
-    let result: any = await this.productModel.findOne({ _id: proudctId, productStatus: ProductStatus.PROCESS }).exec();
+    const productId = shapeIntoMongooseObjectId(id);
+    let result: any = await this.productModel.findOne({ _id: productId, productStatus: ProductStatus.PROCESS }).exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NOT_DATA_FOUND);
 
     //TODO: If authenticated users => first => view log creation
@@ -64,7 +69,7 @@ class ProductService {
       // Check Existance
       const input: ViewInput = {
         memberId: memberId,
-        viewRefId: proudctId,
+        viewRefId: productId,
         viewGroup: ViewGroup.PRODUCT,
       };
       const existView = await this.viewService.checkViewExistence(input);
@@ -76,12 +81,35 @@ class ProductService {
 
         // Increase Counts of  View
         result = await this.productModel
-          .findByIdAndUpdate(proudctId, { $inc: { productViews: +1 } }, { new: true })
+          .findByIdAndUpdate(productId, { $inc: { productViews: +1 } }, { new: true })
           .exec();
       }
     }
     //TODO: Like logic
+
+    // meLiked
+    const likeInput: LikeInput = { memberId: memberId as ObjectId, likeRefId: productId, likeGroup: LikeGroup.PRODUCT };
+    result.meLiked = await this.likeService.checkLikeExistence(likeInput);
+
     return result;
+  }
+
+  public async likeTargetProduct(memberId: ObjectId, likeRefId: ObjectId): Promise<Product> {
+    const target: any = await this.productModel
+      .findOne({ _id: likeRefId, productStatus: ProductStatus.PROCESS })
+      .exec();
+    if (!target) throw new Errors(HttpCode.NOT_FOUND, Message.NOT_DATA_FOUND);
+
+    const input: LikeInput = {
+      memberId: memberId,
+      likeRefId: likeRefId,
+      likeGroup: LikeGroup.PRODUCT,
+    };
+
+    const modifier: number = await this.likeService.toggleLike(input);
+    const result: any = await this.productModel.findByIdAndUpdate(likeRefId, { $inc: { productLikes: modifier } });
+    if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
+    return result as Product;
   }
 
   /* BSSR */

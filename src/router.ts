@@ -21,6 +21,10 @@ router.post(
 router.get("/product/all", productController.getProducts);
 router.get("/product/:id", memberController.retrieveAuth, productController.getProduct);
 
+/** Like **/
+router.post("/product/like", memberController.verifyAuth, productController.toggleLike);
+// router.get("/product/like", memberController.verifyAuth, productController.checkLikeExistence);
+
 /** Order **/
 router.post("/order/create", memberController.verifyAuth, orderController.createOrder);
 router.get("/order/all", memberController.verifyAuth, orderController.getMyOrders);

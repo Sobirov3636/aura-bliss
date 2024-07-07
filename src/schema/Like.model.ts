@@ -25,4 +25,4 @@ const LikeSchema = new Schema(
 
 LikeSchema.index({ memberId: 1, likeRefId: 1 }, { unique: true });
 
-export default mongoose.model("View", LikeSchema);
+export default mongoose.model("Like", LikeSchema);

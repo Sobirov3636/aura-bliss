@@ -2,13 +2,19 @@ import { Request, Response } from "express";
 import { T } from "../libs/types/common";
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import ProductService from "../models/Product.service";
+import LikeService from "../models/Like.service"; // Import LikeService
 import { AdminRequest, ExtendedRequest } from "../libs/types/member";
 import { ProductInput, ProductInquery } from "../libs/types/product";
 import { ProductCategory } from "../libs/enums/product.enum";
 import { ProductTargetUser } from "../libs/enums/product.enum";
 import { ProductBrand } from "../libs/enums/product.enum";
+import { LikeInput } from "../libs/types/like";
+import mongoose from "mongoose"; // Import mongoose to use ObjectId
+
+import { LikeGroup } from "../libs/enums/like.enum";
 
 const productService = new ProductService();
+const likeService = new LikeService(); // Create instance of LikeService
 const productController: T = {};
 
 /* SPA */
@@ -96,6 +102,20 @@ productController.updateChosenProduct = async (req: Request, res: Response) => {
     res.status(HttpCode.OK).json({ data: result });
   } catch (err) {
     console.log("Error, updateChosenProduct", err);
+    if (err instanceof Errors) res.status(err.code).json(err);
+    else res.status(Errors.standard.code).json(Errors.standard);
+  }
+};
+
+/* Like logic */
+productController.toggleLike = async (req: Request, res: Response) => {
+  try {
+    console.log("toggleLike");
+    const input = req.body;
+    const result = await likeService.toggleLike(input);
+    res.status(HttpCode.OK).json({ modifier: result });
+  } catch (err) {
+    console.log("Error, toggleLike", err);
     if (err instanceof Errors) res.status(err.code).json(err);
     else res.status(Errors.standard.code).json(Errors.standard);
   }
