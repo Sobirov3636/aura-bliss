@@ -32,6 +32,7 @@ function validateForm() {
     productPrice = $(".product-price").val(),
     productLeftCount = $(".product-left-count").val(),
     proudctCategory = $(".product-category").val(),
+    proudctBrand = $(".product-brand").val(),
     productDesc = $(".product-desc").val(),
     productStatus = $(".product-status").val();
 
@@ -41,6 +42,7 @@ function validateForm() {
     productPrice === "" ||
     productLeftCount === "" ||
     proudctCategory === "" ||
+    proudctBrand === "" ||
     productDesc === "" ||
     productStatus === ""
   ) {
@@ -53,7 +55,7 @@ function previewFileHandler(input, order) {
   const imgClassName = input.className;
   const file = $(`.${imgClassName}`).get(0).files[0];
   const fileType = file["type"];
-  const validImageType = ["image/jpg", "image/jpeg", "image/png"];
+  const validImageType = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
 
   if (!validImageType.includes(fileType)) {
     alert("Please insert only jpeg, jpg and png!");

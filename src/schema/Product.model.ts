@@ -33,7 +33,7 @@ const productSchema = new Schema(
     productBrand: {
       type: String,
       enum: ProductBrand,
-      // required: true,
+      required: true,
     },
 
     productPrice: {
@@ -69,5 +69,5 @@ const productSchema = new Schema(
   },
   { timestamps: true } // updatedAt, createdAt
 );
-productSchema.index({ productName: 1, productVolume: 1 }, { unique: true });
+// productSchema.index({ productName: 1, productVolume: 1, productBrand: 1 }, { unique: true });
 export default mongoose.model("Product", productSchema);
